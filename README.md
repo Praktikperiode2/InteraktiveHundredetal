@@ -1,8 +1,12 @@
 ## Opgave: Byg dit eget interaktive hundredetal!
-![](images/HundresCart_MoreThan_LessThan.png)
-### Beskrivelse:
 
-Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og du skal så finde de tal, der er 10 mere, 10 mindre, 1 mere og 1 mindre.
+### Beskrivelse:
+Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og brugeren/kunden skal så finde de tal, der er 10 mere, 10 mindre, 1 mere og 1 mindre.
+
+
+<div align="center">
+  <img src="images/HundresCart_MoreThan_LessThan.png" style=" width: 500px;  margin: 0 auto;">
+</div>
 
 ### Krav:
 * **Spilmotor:** C# Winforms, eller efter aftale (specifikke spilmotor eller programmeringssprog, f.eks. Unity, Winforms eller blazor. C# eller javascript)
