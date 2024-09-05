@@ -5,11 +5,11 @@
 Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og du skal så finde de tal, der er 10 mere, 10 mindre, 1 mere og 1 mindre.
 
 ### Krav:
-* **Spilmotor:** [Angiv den specifikke spilmotor eller programmeringssprog, f.eks. Unity, C#]
+* **Spilmotor:** C# Winforms, eller efter aftale (specifikke spilmotor eller programmeringssprog, f.eks. Unity, Winforms eller blazor. C# eller javascript)
 * **Funktionalitet:**
   * Tilfældig talgenerering
   * Brugerinput
-  * Svarafstemning
+  * Svarafstemning / feedback på om svar korrekt forkert
   * Grafisk brugerinterface
 * **Ekstra (valgfrit):**
   * Timer
@@ -80,7 +80,13 @@ namespace Hundredtal
             textBox1Mindre.Text = "";
         }
 
-        // ... resten af koden
+        // ... resten af koden fx event eller som herunder en knap?
+        private void buttonTjekSvar_Click(object sender, EventArgs e)
+        {
+            // Tjek om brugerens svar er korrekte
+            // ... (Implementer logikken her)
+            // Vis en besked til brugeren om, hvor mange svar der var korrekte
+        }
     }
 }
 ```
