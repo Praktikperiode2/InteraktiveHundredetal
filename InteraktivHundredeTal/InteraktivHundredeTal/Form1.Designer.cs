@@ -42,6 +42,7 @@ namespace InteraktivHundredeTal
       this.label1 = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.buttonCheckAnswer_Clic = new System.Windows.Forms.Button();
+      this.timer2_resetGame = new System.Windows.Forms.Timer(this.components);
       this.SuspendLayout();
       // 
       // Label_Center
@@ -174,6 +175,7 @@ namespace InteraktivHundredeTal
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Timer timer1;
     private System.Windows.Forms.Button buttonCheckAnswer_Clic;
+    private System.Windows.Forms.Timer timer2_resetGame;
   }
 }
 

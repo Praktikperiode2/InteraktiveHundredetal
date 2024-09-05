@@ -17,6 +17,7 @@ namespace InteraktivHundredeTal
       InitializeComponent();
       InitializeTimerEvent();
       InitializeKeyPressEvents();
+      ResetGameTimer();
       NyOpgave();
     }
 
@@ -35,6 +36,13 @@ namespace InteraktivHundredeTal
       timer1.Tick += Timer1_Tick;
       timer1.Start();
     }
+
+    private void ResetGameTimer()
+    {
+      timer2_resetGame.Interval = 5000; // 5 sekund
+      timer2_resetGame.Tick += ResetGame;
+    }
+
 
     //private Timer timer1 = new Timer();
 
@@ -91,6 +99,9 @@ namespace InteraktivHundredeTal
       var logic = new LogicHundredeTal();
       Label_Center.Text = logic.GetNewCenterNumber();
 
+      // Nulstil farver til brugerinput
+      ResetColorToWhite();
+
       // Nulstil tekstfelter til brugerinput
       textBox_AddTen.Text = "";
       textBox_Add20.Text = "";
@@ -103,13 +114,13 @@ namespace InteraktivHundredeTal
       // Tjek om brugerens svar er korrekte
       // ... (Implementer logikken her)
       // Vis en besked til brugeren om, hvor mange svar der var korrekte
-
+      timer1.Stop();
       CheckAnswers();
+      timer2_resetGame.Start();
     }
 
     private void CheckAnswers()
     {
-      //throw new NotImplementedException();
 
       var succes = textBox_AddTen.Text == (Int32.Parse(Label_Center.Text) + 10).ToString();
       SetBackColorBasedOnAnswer(textBox_AddTen, succes);
@@ -120,7 +131,6 @@ namespace InteraktivHundredeTal
       succes = textBox_AddOne.Text == (Int32.Parse(Label_Center.Text) + 1).ToString();
       SetBackColorBasedOnAnswer(textBox_AddOne, succes);
 
-      //textBox_AddTwo.Text == "";
     }
 
     private void SetBackColorBasedOnAnswer(TextBox textBox, bool correctAnswer)
@@ -135,5 +145,25 @@ namespace InteraktivHundredeTal
       }
     }
 
+    private void ResetGame(object sender, EventArgs e)
+    {
+      remainingSeconds = 35;
+      NyOpgave();
+      timer2_resetGame.Stop();
+      timer1.Start();
+    }
+
+    private void ResetColorToWhite()
+    {
+      textBox_AddTen.BackColor = Color.White;
+      textBox_Add20.BackColor = Color.White;
+      textBox_AddOne.BackColor = Color.White;
+      textBox_AddTwo.BackColor = Color.White;
+
+      textBox_SubTen.BackColor = Color.White;
+      textBox_Sub20.BackColor = Color.White;
+      textBox_SubOne.BackColor = Color.White;
+      textBox_SubTwo.BackColor = Color.White;
+    }
   }
 }
