@@ -1,5 +1,5 @@
 ## Opgave: Byg dit eget interaktive hundredetal!
-
+![](images/HundresCart_MoreThan_LessThan.png)
 ### Beskrivelse:
 
 Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og du skal så finde de tal, der er 10 mere, 10 mindre, 1 mere og 1 mindre.
