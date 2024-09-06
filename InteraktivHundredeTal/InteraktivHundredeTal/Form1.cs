@@ -151,6 +151,7 @@ namespace InteraktivHundredeTal
       NyOpgave();
       timer2_resetGame.Stop();
       timer1.Start();
+      //
     }
 
     private void ResetColorToWhite()
