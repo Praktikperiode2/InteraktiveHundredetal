@@ -53,6 +53,43 @@ Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil bli
 * Test din kode grundigt for at finde og rette fejl.
 * Spørg din lærer eller medstuderende om hjælp, hvis du sidder fast.
 
+### Eksempel på WorkFlow
+graph LR
+    subgraph Initialisering
+        A(Start) --> B{Initialiser komponenter}
+        B --> C{Initialiser timer-event}
+        C --> D{Initialiser tastatur-events}
+        D --> E{Nulstil spil-timer}
+        E --> F{Ny Spil}
+    end
+
+    subgraph Spil-loop
+         F --> G{Timer1 Spiltid?}
+        classDef tooltip fill:#ffcccc,stroke:#000FF000,stroke-width:2px;
+        class G tooltip
+        G -- Ja --> H{Reduktion af tid}
+        H --> I{Tid udløbet?}
+        I -- Ja --> J{Stop timer}
+        I -- Nej --> G
+        J --> K{Sæt alle tekstbokse til ReadOnly}
+        K --> L{Vis besked: Tid udløbet timer2}
+        L --> M{Spil igen?}
+        M -- Ja --> F
+        M -- Nej --> N{Afslut program}
+        G --> O{Check for svar?}
+        O -- Ja --> P{Tjek svar}
+        P --> Q{Vis feedback}
+        Q --> R{Nulstil spil}
+        R --> F
+    end
+
+   subgraph Brugerinput
+        F --> S{Bruger indtaster svar}
+        S --> T{Valider input karakter}
+        T -- Gyldigt (tal & backspace)--> O
+        T -- Ugyldigt (ikke tal)--> S
+    end
+
 **Eksempel på kode (C#):**
 ```csharp
 using System;
