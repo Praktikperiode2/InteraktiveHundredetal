@@ -54,6 +54,7 @@ Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil bli
 * Spørg din lærer eller medstuderende om hjælp, hvis du sidder fast.
 
 ### Eksempel på WorkFlow
+```mermaid
 graph LR
     subgraph Initialisering
         A(Start) --> B{Initialiser komponenter}
@@ -89,7 +90,7 @@ graph LR
         T -- Gyldigt (tal & backspace)--> O
         T -- Ugyldigt (ikke tal)--> S
     end
-
+```
 **Eksempel på kode (C#):**
 ```csharp
 using System;
