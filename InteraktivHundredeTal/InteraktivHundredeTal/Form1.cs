@@ -16,27 +16,25 @@ namespace InteraktivHundredeTal
     {
       InitializeComponent();
       _logicNumberGenerator = new LogicHundredeTal();
+      _textBoxs = new[] { textBox_AddTen, textBox_Add20, textBox_AddOne, textBox_AddTwo, textBox_SubTen, textBox_Sub20, textBox_SubOne, textBox_SubTwo };
       InitializeTimerEvent();
       InitializeKeyPressEvents();
       ResetGameTimer();
-      NewGame();
+      NewGame();      
     }
+
+    private TextBox[] _textBoxs = null;
     LogicHundredeTal _logicNumberGenerator = null;
     private const int _gameTime = 120;
     private int _remainingSeconds = _gameTime;
     private bool _inGame = true;
     private void InitializeKeyPressEvents()
     {
-      textBox_AddOne.KeyPress += textBox_KeyPress;
-      textBox_AddTwo.KeyPress += textBox_KeyPress;
-      textBox_AddTen.KeyPress += textBox_KeyPress;
-      textBox_Add20.KeyPress += textBox_KeyPress;
-
-      textBox_SubOne.KeyPress += textBox_KeyPress;
-      textBox_SubTen.KeyPress += textBox_KeyPress;
-      textBox_SubOne.KeyPress += textBox_KeyPress;
-      textBox_SubTen.KeyPress += textBox_KeyPress;
-      // ... og så videre for de resterende textboxes
+      // Tilknytter Event på hver enkelt tekstboks 
+      foreach (var textBox in _textBoxs)
+      {
+        textBox.KeyPress += textBox_KeyPress;
+      }
     }
 
     private void InitializeTimerEvent()
@@ -84,15 +82,13 @@ namespace InteraktivHundredeTal
 
     private void SetAllTextBoxesReadOnly(bool result)
     {
-      textBox_AddTen.ReadOnly = result;
-      textBox_Add20.ReadOnly = result;
-      textBox_AddOne.ReadOnly = result;
-      textBox_AddTwo.ReadOnly = result;
 
-      textBox_SubTen.ReadOnly = result;
-      textBox_Sub20.ReadOnly = result;
-      textBox_SubOne.ReadOnly = result;
-      textBox_SubTwo.ReadOnly = result;
+      textBox_AddTen.ReadOnly = result;
+      // Sætter readOnly på hver enkelt tekstboks 
+      foreach (var textBox in _textBoxs)
+      {
+        textBox.ReadOnly = result;
+      }
     }
 
     private void textBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -111,16 +107,11 @@ namespace InteraktivHundredeTal
       // Nulstil farver til brugerinput
       SeTextBoxBackColor(Color.White);
 
-      // Nulstil tekstfelter til brugerinput
-      textBox_AddTen.Text = "";
-      textBox_Add20.Text = "";
-      textBox_AddOne.Text = "";
-      textBox_AddTwo.Text = "";
-
-      textBox_SubTen.Text = "";
-      textBox_Sub20.Text = "";
-      textBox_SubOne.Text = "";
-      textBox_SubTwo.Text = "";
+      // Nulstil tekstfelter til bruger input på hver enkelt tekstboks 
+      foreach (var textBox in _textBoxs)
+      {
+        textBox.Text = string.Empty;
+      }
     }
 
     private void buttonCheckAnswer_Click(object sender, EventArgs e)
@@ -171,15 +162,11 @@ namespace InteraktivHundredeTal
 
     private void SeTextBoxBackColor(Color color)
     {
-      textBox_AddTen.BackColor = color;
-      textBox_Add20.BackColor =  color;
-      textBox_AddOne.BackColor = color;
-      textBox_AddTwo.BackColor = color;
-                                 
-      textBox_SubTen.BackColor = color;
-      textBox_Sub20.BackColor =  color;
-      textBox_SubOne.BackColor = color;
-      textBox_SubTwo.BackColor = color;
+      // Sætter farven på hver enkelt tekstboks 
+      foreach (var textBox in _textBoxs)
+      {
+        textBox.BackColor = color;
+      }
     }
 
     private void button_PasueStart_Click(object sender, EventArgs e)
