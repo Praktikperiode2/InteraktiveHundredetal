@@ -204,7 +204,18 @@ namespace InteraktivHundredeTal
 
     private void Form1_Load(object sender, EventArgs e)
     {
+      // Create a new instance of the second form
+        EnterYourNameForm secondForm = new EnterYourNameForm();
 
+      // Show the second form as a modal dialog
+      if (secondForm.ShowDialog() == DialogResult.OK)
+      {
+        // Get the name from the second form
+        string name = secondForm.EnteredName;
+
+        // Display the name in a message box
+        this.Text = $"Lige nu spiller \"{name}\" interaktive hundredtal";
+      }
     }
   }
 }

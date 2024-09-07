@@ -264,7 +264,7 @@ namespace InteraktivHundredeTal
       this.Controls.Add(this.textBox_AddTen);
       this.Controls.Add(this.Label_Center);
       this.Name = "Form1";
-      this.Text = "Form1";
+      this.Text = "Interaktive Hundredtal Form1";
       this.Load += new System.EventHandler(this.Form1_Load);
       this.ResumeLayout(false);
       this.PerformLayout();
