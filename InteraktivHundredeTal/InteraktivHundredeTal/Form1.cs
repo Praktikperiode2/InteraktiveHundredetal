@@ -35,6 +35,27 @@ namespace InteraktivHundredeTal
       {
         textBox.KeyPress += textBox_KeyPress;
       }
+
+      foreach (var textBox in _textBoxs)
+      {
+        textBox.Enter += textBox_Enter;
+        textBox.Leave += textBox_Leave;
+      }
+    }
+    private TextBox selectedTextBox;
+
+    private void textBox_Enter(object sender, EventArgs e)
+    {
+      TextBox textBox = (TextBox)sender;
+      textBox.BackColor = Color.LightBlue;
+      selectedTextBox = textBox;
+    }
+
+    private void textBox_Leave(object sender, EventArgs e)
+    {
+      TextBox textBox = (TextBox)sender;
+      textBox.BackColor = Color.White;
+      selectedTextBox = null;
     }
 
     private void InitializeTimerEvent()
