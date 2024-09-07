@@ -42,20 +42,18 @@ namespace InteraktivHundredeTal
         textBox.Leave += textBox_Leave;
       }
     }
-    private TextBox selectedTextBox;
 
     private void textBox_Enter(object sender, EventArgs e)
     {
       TextBox textBox = (TextBox)sender;
       textBox.BackColor = Color.LightBlue;
-      selectedTextBox = textBox;
+      textBox.SelectAll();
     }
 
     private void textBox_Leave(object sender, EventArgs e)
     {
       TextBox textBox = (TextBox)sender;
       textBox.BackColor = Color.White;
-      selectedTextBox = null;
     }
 
     private void InitializeTimerEvent()
