@@ -15,20 +15,29 @@ namespace InteraktivHundredeTal
     public Form1()
     {
       InitializeComponent();
+      _logicNumberGenerator = new LogicHundredeTal();
       InitializeTimerEvent();
       InitializeKeyPressEvents();
       ResetGameTimer();
-      NyOpgave();
+      NewGame();
     }
-
+    LogicHundredeTal _logicNumberGenerator = null;
+    private const int _gameTime = 120;
+    private int _remainingSeconds = _gameTime;
+    private bool _inGame = true;
     private void InitializeKeyPressEvents()
     {
       textBox_AddOne.KeyPress += textBox_KeyPress;
+      textBox_AddTwo.KeyPress += textBox_KeyPress;
       textBox_AddTen.KeyPress += textBox_KeyPress;
+      textBox_Add20.KeyPress += textBox_KeyPress;
+
+      textBox_SubOne.KeyPress += textBox_KeyPress;
+      textBox_SubTen.KeyPress += textBox_KeyPress;
+      textBox_SubOne.KeyPress += textBox_KeyPress;
+      textBox_SubTen.KeyPress += textBox_KeyPress;
       // ... og så videre for de resterende textboxes
     }
-
-    private int remainingSeconds = 35; // Start med 60 sekunder
 
     private void InitializeTimerEvent()
     {
@@ -43,18 +52,14 @@ namespace InteraktivHundredeTal
       timer2_resetGame.Tick += ResetGame;
     }
 
-
-    //private Timer timer1 = new Timer();
-
     private void Timer1_Tick(object sender, EventArgs e)
     {
-      remainingSeconds--;
-      label1.Text = $"{remainingSeconds} sekunder tilbage";
+      _remainingSeconds--;
+      label1.Text = $"{_remainingSeconds} sekunder tilbage";
 
-      if (remainingSeconds <= 0)
+      if (_remainingSeconds <= 0)
       {
-        timer1.Stop();
-        SetAllTextBoxsReadOnlyStateTo(true);
+        CheckAnswers();
         DialogResult result = MessageBox.Show("Tiden er udløbet!\nØnsker du at prøve igen?", "Prøv igen?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
         if (result == DialogResult.No) Environment.Exit(1);
@@ -65,13 +70,19 @@ namespace InteraktivHundredeTal
 
     private void ResetGame()
     {
-      SetAllTextBoxsReadOnlyStateTo(false);
-      remainingSeconds = 60;
+      timer2_resetGame.Stop();
+      _remainingSeconds = _gameTime;
       timer1.Start();
-      NyOpgave();
+      NewGame();
+      SetAllTextBoxesReadOnly(false);
     }
 
-    private void SetAllTextBoxsReadOnlyStateTo(bool result)
+    private void ResetGame(object sender, EventArgs e)
+    {
+      ResetGame();
+    }
+
+    private void SetAllTextBoxesReadOnly(bool result)
     {
       textBox_AddTen.ReadOnly = result;
       textBox_Add20.ReadOnly = result;
@@ -93,20 +104,23 @@ namespace InteraktivHundredeTal
       }
     }
 
-    private void NyOpgave()
+    private void NewGame()
     {
-
-      var logic = new LogicHundredeTal();
-      Label_Center.Text = logic.GetNewCenterNumber();
+      Label_Center.Text = _logicNumberGenerator.GetNewNumber();
 
       // Nulstil farver til brugerinput
-      ResetColorToWhite();
+      SeTextBoxBackColor(Color.White);
 
       // Nulstil tekstfelter til brugerinput
       textBox_AddTen.Text = "";
       textBox_Add20.Text = "";
       textBox_AddOne.Text = "";
       textBox_AddTwo.Text = "";
+
+      textBox_SubTen.Text = "";
+      textBox_Sub20.Text = "";
+      textBox_SubOne.Text = "";
+      textBox_SubTwo.Text = "";
     }
 
     private void buttonCheckAnswer_Click(object sender, EventArgs e)
@@ -114,57 +128,83 @@ namespace InteraktivHundredeTal
       // Tjek om brugerens svar er korrekte
       // ... (Implementer logikken her)
       // Vis en besked til brugeren om, hvor mange svar der var korrekte
-      timer1.Stop();
       CheckAnswers();
       timer2_resetGame.Start();
     }
 
     private void CheckAnswers()
     {
+      // Set all text boxes to read-only state
+      SetAllTextBoxesReadOnly(true);
 
-      var succes = textBox_AddTen.Text == (Int32.Parse(Label_Center.Text) + 10).ToString();
-      SetBackColorBasedOnAnswer(textBox_AddTen, succes);
+      // Stop the timer
+      timer1.Stop();
 
-      succes = textBox_Add20.Text == (Int32.Parse(Label_Center.Text) + 20).ToString();
-      SetBackColorBasedOnAnswer(textBox_Add20, succes);
+      // Check answers for all eight and place them in a list 
+      var answers = new Dictionary<TextBox, bool>()
+      {
+        { textBox_AddTen, _logicNumberGenerator.IsCorrectAddition(textBox_AddTen.Text, 10) },
+        { textBox_Add20, _logicNumberGenerator.IsCorrectAddition(textBox_Add20.Text, 20) },
+        { textBox_AddOne, _logicNumberGenerator.IsCorrectAddition(textBox_AddOne.Text, 1) },
+        { textBox_AddTwo, _logicNumberGenerator.IsCorrectAddition(textBox_AddTwo.Text, 2) },
 
-      succes = textBox_AddOne.Text == (Int32.Parse(Label_Center.Text) + 1).ToString();
-      SetBackColorBasedOnAnswer(textBox_AddOne, succes);
+        { textBox_SubOne, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubOne.Text, -1) },
+        { textBox_SubTwo, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubTwo.Text, -2) },
+        { textBox_SubTen, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubTen.Text, -10) },
+        { textBox_Sub20, _logicNumberGenerator.IsCorrectSubtraction(textBox_Sub20.Text, -20) }
+      };
 
+      SetBackColorBasedOnAnswer(answers);
     }
 
-    private void SetBackColorBasedOnAnswer(TextBox textBox, bool correctAnswer)
+    //Set background color for each text box based on answers
+    private void SetBackColorBasedOnAnswer(Dictionary<TextBox, bool> answers)
     {
-      if (correctAnswer)
+      foreach (var item in answers)
       {
-        textBox.BackColor = Color.Green;
+        TextBox textBox = item.Key;
+        bool correctAnswer = item.Value;
+
+        textBox.BackColor = correctAnswer ? Color.Green : Color.Red;
+      }
+    }
+
+    private void SeTextBoxBackColor(Color color)
+    {
+      textBox_AddTen.BackColor = color;
+      textBox_Add20.BackColor =  color;
+      textBox_AddOne.BackColor = color;
+      textBox_AddTwo.BackColor = color;
+                                 
+      textBox_SubTen.BackColor = color;
+      textBox_Sub20.BackColor =  color;
+      textBox_SubOne.BackColor = color;
+      textBox_SubTwo.BackColor = color;
+    }
+
+    private void button_PasueStart_Click(object sender, EventArgs e)
+    {
+      if (_inGame)
+      {
+        timer1.Stop();
+        _inGame = false;
+        button_PasueStart.Text = "Start Spil";
+        SetAllTextBoxesReadOnly(true);
+        SeTextBoxBackColor(Color.LightGray);
       }
       else
       {
-        textBox.BackColor = Color.Red;
+        timer1.Start();
+        _inGame = true;
+        button_PasueStart.Text = "Pause Spil";
+        SetAllTextBoxesReadOnly(false);
+        SeTextBoxBackColor(Color.White);
       }
     }
 
-    private void ResetGame(object sender, EventArgs e)
+    private void Form1_Load(object sender, EventArgs e)
     {
-      remainingSeconds = 35;
-      NyOpgave();
-      timer2_resetGame.Stop();
-      timer1.Start();
-      //
-    }
 
-    private void ResetColorToWhite()
-    {
-      textBox_AddTen.BackColor = Color.White;
-      textBox_Add20.BackColor = Color.White;
-      textBox_AddOne.BackColor = Color.White;
-      textBox_AddTwo.BackColor = Color.White;
-
-      textBox_SubTen.BackColor = Color.White;
-      textBox_Sub20.BackColor = Color.White;
-      textBox_SubOne.BackColor = Color.White;
-      textBox_SubTwo.BackColor = Color.White;
     }
   }
 }
