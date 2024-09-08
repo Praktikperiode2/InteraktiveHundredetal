@@ -16,6 +16,7 @@ namespace InteraktivHundredeTal
     {
       InitializeComponent();
       _logicNumberGenerator = new LogicHundredeTal();
+      // Array of all eight textbox
       _textBoxs = new[] { textBox_AddTen, textBox_Add20, textBox_AddOne, textBox_AddTwo, textBox_SubTen, textBox_Sub20, textBox_SubOne, textBox_SubTwo };
       InitializeTimerEvent();
       InitializeKeyPressEvents();
@@ -25,7 +26,7 @@ namespace InteraktivHundredeTal
 
     private TextBox[] _textBoxs = null;
     LogicHundredeTal _logicNumberGenerator = null;
-    private const int _gameTime = 120;
+    private const int _gameTime = 300;
     private int _remainingSeconds = _gameTime;
     private bool _inGame = true;
     private void InitializeKeyPressEvents()
@@ -34,10 +35,6 @@ namespace InteraktivHundredeTal
       foreach (var textBox in _textBoxs)
       {
         textBox.KeyPress += textBox_KeyPress;
-      }
-
-      foreach (var textBox in _textBoxs)
-      {
         textBox.Enter += textBox_Enter;
         textBox.Leave += textBox_Leave;
       }
@@ -65,7 +62,7 @@ namespace InteraktivHundredeTal
 
     private void ResetGameTimer()
     {
-      timer2_resetGame.Interval = 5000; // 5 sekund
+      timer2_resetGame.Interval = 10000; // 10 sekund
       timer2_resetGame.Tick += ResetGame;
     }
 
