@@ -12,12 +12,12 @@ namespace InteraktivHundredeTal
 
     public int StartingValue { get; private set; }
     /// <summary>
-    /// Generer et tilfældigt tal mellem 10 og 99
+    /// Generer et tilfældigt tal mellem e4f10 og 99
     /// </summary>
     /// <returns></returns>
     internal string GetNewNumber()
     {
-      StartingValue = random.Next(20, 99);
+      StartingValue = random.Next(0, 20);
       return StartingValue.ToString();
     }
 
