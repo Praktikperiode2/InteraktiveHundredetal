@@ -18,8 +18,8 @@ namespace InteraktivHundredeTal
       _logicNumberGenerator = new LogicHundredeTal();
       // Array of all eight textbox
       _textBoxs = new[] { textBox_AddTen, textBox_Add20, textBox_AddOne, textBox_AddTwo, textBox_SubTen, textBox_Sub20, textBox_SubOne, textBox_SubTwo };
+      InitializeTextBoxsEvents();
       InitializeTimerEvent();
-      InitializeKeyPressEvents();
       ResetGameTimer();
       NewGame();      
     }
@@ -29,7 +29,7 @@ namespace InteraktivHundredeTal
     private const int _gameTime = 300;
     private int _remainingSeconds = _gameTime;
     private bool _inGame = true;
-    private void InitializeKeyPressEvents()
+    private void InitializeTextBoxsEvents()
     {
       // Tilknytter Event på hver enkelt tekstboks 
       foreach (var textBox in _textBoxs)
