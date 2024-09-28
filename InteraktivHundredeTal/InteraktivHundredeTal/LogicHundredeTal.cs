@@ -17,7 +17,7 @@ namespace InteraktivHundredeTal
     /// <returns></returns>
     internal string GetNewNumber()
     {
-      StartingValue = random.Next(0, 20);
+      StartingValue = random.Next(10, 80);
       return StartingValue.ToString();
     }
 

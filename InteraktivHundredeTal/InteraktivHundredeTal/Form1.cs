@@ -21,12 +21,12 @@ namespace InteraktivHundredeTal
             InitializeTextBoxsEvents();
             InitializeTimerEvent();
             ResetGameTimer();
-            //NewGame(); //Flyttet til metoden onLoadForm
+            NewGame(); //Flyttet til metoden onLoadForm
         }
 
         private TextBox[] _textBoxs = null;
         LogicHundredeTal _logicNumberGenerator = null;
-        private const int _gameTime = 301;
+        private const int _gameTime = 1000;
         private int _remainingSeconds = _gameTime;
         private bool _inGame = true;
         private void InitializeTextBoxsEvents()
@@ -108,8 +108,10 @@ namespace InteraktivHundredeTal
 
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Tillad kun tal og backspace
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            // Get Current TextBox
+            TextBox textBox = (TextBox)sender;
+            // Only permit digits, backspace, and the negative sign (at the beginning)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && !(e.KeyChar == '-' && textBox.Text.Length == 0))
             {
                 e.Handled = true;
             }
@@ -133,8 +135,8 @@ namespace InteraktivHundredeTal
         {
             // Tjek om brugerens svar er korrekte
             // ... (Implementer logikken her)
-            // Vis en besked til brugeren om, hvor mange svar der var korrekte
             CheckAnswers();
+            // TODO: Vis en besked til brugeren om, hvor mange svar der var korrekte
             timer2_resetGame.Start();
         }
 
@@ -148,17 +150,17 @@ namespace InteraktivHundredeTal
 
             // Check answers for all eight and place them in a list 
             var answers = new Dictionary<TextBox, bool>()
-      {
-        { textBox_AddTen, _logicNumberGenerator.IsCorrectAddition(textBox_AddTen.Text, 10) },
-        { textBox_Add20, _logicNumberGenerator.IsCorrectAddition(textBox_Add20.Text, 20) },
-        { textBox_AddOne, _logicNumberGenerator.IsCorrectAddition(textBox_AddOne.Text, 1) },
-        { textBox_AddTwo, _logicNumberGenerator.IsCorrectAddition(textBox_AddTwo.Text, 2) },
+            {
+              { textBox_AddTen, _logicNumberGenerator.IsCorrectAddition(textBox_AddTen.Text, 10) },
+              { textBox_Add20, _logicNumberGenerator.IsCorrectAddition(textBox_Add20.Text, 20) },
+              { textBox_AddOne, _logicNumberGenerator.IsCorrectAddition(textBox_AddOne.Text, 1) },
+              { textBox_AddTwo, _logicNumberGenerator.IsCorrectAddition(textBox_AddTwo.Text, 2) },
 
-        { textBox_SubOne, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubOne.Text, -1) },
-        { textBox_SubTwo, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubTwo.Text, -2) },
-        { textBox_SubTen, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubTen.Text, -10) },
-        { textBox_Sub20, _logicNumberGenerator.IsCorrectSubtraction(textBox_Sub20.Text, -20) }
-      };
+              { textBox_SubOne, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubOne.Text, -1) },
+              { textBox_SubTwo, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubTwo.Text, -2) },
+              { textBox_SubTen, _logicNumberGenerator.IsCorrectSubtraction(textBox_SubTen.Text, -10) },
+              { textBox_Sub20, _logicNumberGenerator.IsCorrectSubtraction(textBox_Sub20.Text, -20) }
+            };
 
             SetBackColorBasedOnAnswer(answers);
         }
