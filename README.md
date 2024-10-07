@@ -1,7 +1,8 @@
 ## Opgave: Byg dit eget interaktive hundredetal!
-
+___Tema: Spiludvikling.___ <br>
+_Et spil henvendt til børn i indskolingen_
 ### Beskrivelse:
-Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og brugeren/kunden skal så finde de tal, der er 10 mere, 10 mindre, 1 mere og 1 mindre.
+Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og brugeren/kunden/barnet skal så finde de tal, der er 10 større, 10 mindre, 1 større og 1 mindre.
 
 
 <div align="center">
