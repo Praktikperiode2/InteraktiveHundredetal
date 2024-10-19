@@ -298,5 +298,10 @@ namespace InteraktivHundredeTal
         {
             dataGridView1.Visible = checkBox1.Checked;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NewGame();
+        }
     }
 }
