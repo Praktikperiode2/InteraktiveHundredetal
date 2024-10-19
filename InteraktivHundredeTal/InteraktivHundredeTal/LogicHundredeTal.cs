@@ -10,15 +10,15 @@ namespace InteraktivHundredeTal
   {
     private Random random = new Random();
 
-    public int StartingValue { get; private set; }
+    public int CurrentRandomNumber { get; private set; }
     /// <summary>
     /// Generer et tilfældigt tal mellem e4f10 og 99
     /// </summary>
     /// <returns></returns>
     internal string GetNewNumber()
     {
-      StartingValue = random.Next(10, 80);
-      return StartingValue.ToString();
+      CurrentRandomNumber = random.Next(10, 80);
+      return CurrentRandomNumber.ToString();
     }
 
     internal bool IsCorrectAddition(string inputNum, int NumericShift)
@@ -26,7 +26,7 @@ namespace InteraktivHundredeTal
       try
       {
         int parsedValue = int.Parse(inputNum);
-        return parsedValue == StartingValue + NumericShift;
+        return parsedValue == CurrentRandomNumber + NumericShift;
       }
       catch (FormatException)
       {
@@ -39,7 +39,7 @@ namespace InteraktivHundredeTal
       try
       {
         int parsedValue = int.Parse(inputNum);
-        return parsedValue - StartingValue == targetValue;
+        return parsedValue - CurrentRandomNumber == targetValue;
       }
       catch (FormatException)
       {

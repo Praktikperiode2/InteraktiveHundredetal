@@ -15,6 +15,11 @@ namespace InteraktivHundredeTal
         public Form1()
         {
             InitializeComponent();
+            PopulateGrid();
+            dataGridView1.StandardTab = false;
+            dataGridView1.GotFocus += DataGridView1_GotFocus;
+            dataGridView1.ReadOnly = true;
+            StyleGrid();
             _logicNumberGenerator = new LogicHundredeTal();
             // Array of all eight textbox
             _textBoxs = new[] { textBox_AddTen, textBox_Add20, textBox_AddOne, textBox_AddTwo, textBox_SubTen, textBox_Sub20, textBox_SubOne, textBox_SubTwo };
@@ -22,6 +27,11 @@ namespace InteraktivHundredeTal
             InitializeTimerEvent();
             ResetGameTimer();
             NewGame(); //Flyttet til metoden onLoadForm
+        }
+
+        private void DataGridView1_GotFocus(object sender, EventArgs e)
+        {
+            textBox_AddTen.Focus();
         }
 
         private TextBox[] _textBoxs = null;
@@ -120,6 +130,7 @@ namespace InteraktivHundredeTal
         private void NewGame()
         {
             Label_Center.Text = _logicNumberGenerator.GetNewNumber();
+            HighlightCurrentRandomNumberInGrid();
 
             // Nulstil farver til brugerinput
             SeTextBoxBackColor(Color.White);
@@ -188,6 +199,7 @@ namespace InteraktivHundredeTal
 
         private void button_PasueStart_Click(object sender, EventArgs e)
         {
+            //dataGridView1.Height //width = 427, Height =302
             if (_inGame)
             {
                 timer1.Stop();
@@ -221,6 +233,70 @@ namespace InteraktivHundredeTal
                 this.Text = $"Lige nu spiller \"{name}\" interaktive hundredtal";
             }
             timer1.Start();
+        }
+
+        private void HighlightCurrentRandomNumberInGrid()
+        {
+            for (int rowindex = 0; rowindex < dataGridView1.Rows.Count; rowindex++)
+            {
+                for (int columnindex = 0; columnindex < dataGridView1.Rows[rowindex].Cells.Count; columnindex++)
+                {
+                    string value = dataGridView1.Rows[rowindex].Cells[columnindex].Value.ToString();
+
+                    if (value == _logicNumberGenerator.CurrentRandomNumber.ToString())
+                        dataGridView1.CurrentCell = dataGridView1.Rows[rowindex].Cells[columnindex];
+                }
+            }
+            //_logicNumberGenerator.CurrentRandomNumber;
+        }
+
+        private void PopulateGrid()
+        {
+            // Indstil antallet af kolonner og rækker
+            int rows = 10;
+            int columns = 10;
+
+            dataGridView1.ColumnCount = columns;
+            dataGridView1.RowCount = rows;
+
+            // Fyld grid'en med tallene 1 til 100
+            int number = 1;
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < columns; col++)
+                {
+                    dataGridView1.Rows[row].Cells[col].Value = number++;
+                }
+            }
+
+            // Juster kolonnebredden
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.Width = 35;
+            }
+        }
+
+        private void StyleGrid()
+        {
+            // Indstil baggrundsfarven til gul
+            dataGridView1.BackgroundColor = Color.FromArgb(255, 253, 208); // Lys gul farve
+
+            // Indstil cellernes stil
+            DataGridViewCellStyle style = new DataGridViewCellStyle();
+            style.BackColor = Color.FromArgb(255, 253, 208); // Lys gul farve
+            style.ForeColor = Color.Black;
+            style.SelectionBackColor = Color.CadetBlue; //Color.FromArgb(255, 228, 181); // Lysere gul farve ved valg
+            style.SelectionForeColor = Color.Black;
+            style.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+
+            dataGridView1.DefaultCellStyle = style;
+            dataGridView1.ColumnHeadersDefaultCellStyle = style;
+            dataGridView1.RowHeadersDefaultCellStyle = style;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Visible = checkBox1.Checked;
         }
     }
 }
