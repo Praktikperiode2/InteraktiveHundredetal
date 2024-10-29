@@ -10,24 +10,35 @@ using System.Windows.Forms;
 
 namespace InteraktivHundredeTal
 {
-  public partial class GameMenuSelectionForm : Form
-  {
-
-    public string EnteredName { get; private set; }
-    public GameMenuSelectionForm()
+    public partial class GameMenuSelectionForm : Form
     {
-      InitializeComponent();
-      textBox1.KeyDown += textBox1_KeyDown;
-    }
+        UserProfileDto _userProfile;
+        public string EnteredName { get; private set; }
+        public GameMenuSelectionForm()
+        {
+            InitializeComponent();
+            textBox1.KeyDown += textBox1_KeyDown;
+            _userProfile = new UserProfileDto();
+        }
 
-    private void textBox1_KeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.KeyCode == Keys.Enter)
-      {
-        EnteredName = textBox1.Text;
-        DialogResult = DialogResult.OK;
-        Close();
-      }
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                InteraktivHundredetal_btn_Click(sender, e);
+            }
+        }
+
+        private void InteraktivHundredetal_btn_Click(object sender, EventArgs e)
+        {
+            var hundredetalForm = new Form1(_userProfile, () => { Show(); });
+            this.Hide();
+            hundredetalForm.Show();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            _userProfile.UserName = textBox1.Text;
+        }
     }
-  }
 }

@@ -12,7 +12,7 @@ namespace InteraktivHundredeTal
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(UserProfileDto userProfileDto, Action showMainForm)
         {
             InitializeComponent();
             PopulateGrid();
@@ -25,6 +25,15 @@ namespace InteraktivHundredeTal
             ResetGameTimer();
             NewGame(); //Flyttet til metoden onLoadForm
             InitializeDataGridView1();
+            _userProfileDto = userProfileDto;
+            _showMainForm = showMainForm;
+            FormClosed += Form1_FormClosed;
+        }
+
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _showMainForm();
         }
 
         private void InitializeDataGridView1()
@@ -48,6 +57,8 @@ namespace InteraktivHundredeTal
         private TextBox[] _textBoxs = null;
         LogicHundredeTal _logicNumberGenerator = null;
         private const int _gameTime = 1000;
+        private readonly UserProfileDto _userProfileDto;
+        private readonly Action _showMainForm;
         private int _remainingSeconds = _gameTime;
         private bool _inGame = true;
         private void InitializeTextBoxsEvents()
@@ -233,18 +244,8 @@ namespace InteraktivHundredeTal
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Create a new instance of the second form
-            GameMenuSelectionForm secondForm = new GameMenuSelectionForm();
 
-            // Show the second form as a modal dialog
-            if (secondForm.ShowDialog() == DialogResult.OK)
-            {
-                // Get the name from the second form
-                string name = secondForm.EnteredName;
-
-                // Display the name in a message box
-                this.Text = $"Lige nu spiller \"{name}\" interaktive hundredtal";
-            }
+            this.Text = $"Lige nu spiller \"{_userProfileDto.UserName}\" interaktive hundredtal";
             timer1.Start();
         }
 
