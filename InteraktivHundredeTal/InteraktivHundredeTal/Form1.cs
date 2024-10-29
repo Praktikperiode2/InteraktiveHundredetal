@@ -16,9 +16,7 @@ namespace InteraktivHundredeTal
         {
             InitializeComponent();
             PopulateGrid();
-            dataGridView1.StandardTab = false;
-            dataGridView1.GotFocus += DataGridView1_GotFocus;
-            dataGridView1.ReadOnly = true;
+            InitializeDataGridView1();
             StyleGrid();
             _logicNumberGenerator = new LogicHundredeTal();
             // Array of all eight textbox
@@ -27,6 +25,19 @@ namespace InteraktivHundredeTal
             InitializeTimerEvent();
             ResetGameTimer();
             NewGame(); //Flyttet til metoden onLoadForm
+            dataGridView1.CurrentCell.ReadOnly = true;
+        }
+
+        private void InitializeDataGridView1()
+        {
+            dataGridView1.StandardTab = false;
+            dataGridView1.Enter += DataGridView1_GotFocus;
+            dataGridView1.ReadOnly = true;
+        }
+
+        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            HighlightCurrentRandomNumberInGrid();
         }
 
         private void DataGridView1_GotFocus(object sender, EventArgs e)
@@ -200,6 +211,8 @@ namespace InteraktivHundredeTal
         private void button_PasueStart_Click(object sender, EventArgs e)
         {
             //dataGridView1.Height //width = 427, Height =302
+            if (timer2_resetGame.Enabled) return;
+
             if (_inGame)
             {
                 timer1.Stop();
@@ -244,7 +257,11 @@ namespace InteraktivHundredeTal
                     string value = dataGridView1.Rows[rowindex].Cells[columnindex].Value.ToString();
 
                     if (value == _logicNumberGenerator.CurrentRandomNumber.ToString())
+                    {
+                        dataGridView1.SelectionChanged -= DataGridView1_SelectionChanged;
                         dataGridView1.CurrentCell = dataGridView1.Rows[rowindex].Cells[columnindex];
+                        dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
+                    }
                 }
             }
             //_logicNumberGenerator.CurrentRandomNumber;
@@ -253,14 +270,14 @@ namespace InteraktivHundredeTal
         private void PopulateGrid()
         {
             // Indstil antallet af kolonner og rækker
-            int rows = 10;
+            int rows = 12;
             int columns = 10;
 
             dataGridView1.ColumnCount = columns;
             dataGridView1.RowCount = rows;
 
             // Fyld grid'en med tallene 1 til 100
-            int number = 1;
+            int number = -19;
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < columns; col++)
@@ -301,7 +318,8 @@ namespace InteraktivHundredeTal
 
         private void button1_Click(object sender, EventArgs e)
         {
-            NewGame();
+            //if (!timer1.Enabled) return;
+            ResetGame();
         }
     }
 }
