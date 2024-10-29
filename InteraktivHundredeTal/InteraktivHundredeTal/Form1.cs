@@ -16,7 +16,6 @@ namespace InteraktivHundredeTal
         {
             InitializeComponent();
             PopulateGrid();
-            InitializeDataGridView1();
             StyleGrid();
             _logicNumberGenerator = new LogicHundredeTal();
             // Array of all eight textbox
@@ -25,7 +24,7 @@ namespace InteraktivHundredeTal
             InitializeTimerEvent();
             ResetGameTimer();
             NewGame(); //Flyttet til metoden onLoadForm
-            dataGridView1.CurrentCell.ReadOnly = true;
+            InitializeDataGridView1();
         }
 
         private void InitializeDataGridView1()
@@ -33,6 +32,7 @@ namespace InteraktivHundredeTal
             dataGridView1.StandardTab = false;
             dataGridView1.Enter += DataGridView1_GotFocus;
             dataGridView1.ReadOnly = true;
+            dataGridView1.CurrentCell.ReadOnly = true;
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
