@@ -1,7 +1,7 @@
 ﻿
 namespace InteraktivHundredeTal
 {
-  partial class EnterYourNameForm
+  partial class GameMenuSelectionForm
   {
     /// <summary>
     /// Required designer variable.

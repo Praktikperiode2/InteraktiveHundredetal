@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace InteraktivHundredeTal
 {
-  public partial class EnterYourNameForm : Form
+  public partial class GameMenuSelectionForm : Form
   {
 
     public string EnteredName { get; private set; }
-    public EnterYourNameForm()
+    public GameMenuSelectionForm()
     {
       InitializeComponent();
       textBox1.KeyDown += textBox1_KeyDown;
