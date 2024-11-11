@@ -1,30 +1,87 @@
-## Opgave: Byg dit eget interaktive hundredetal!
+# Dag 1: Interaktive hundredetal
 ___Tema: Spiludvikling.___ <br>
 _Et spil henvendt til børn i indskolingen_
+
+___Muck up af spillet___
+<div align="center">
+  <img src="images/HundresCart_MoreThan_LessThan.png" style=" width: 500px;  margin: 0 auto;">
+</div>
+
+# Læringsmål 
+>* Eleverne skal kunne definere et flowchart. 
+>*	Eleverne skal kunne identificere de grundlæggende symboler i et flowchart. 
+>*	Eleverne skal kunne konstruere et simpelt flowchart for en given algoritme. 
+>*	Eleverne skal kunne forstå sammenhængen mellem et flowchart og en programkode.
+
+
+## Oplæg til Opgave 1: <br>Byg et ***flowchart*** for et interaktive hundredetal!
+
+**Hvorfor et flowchart er vigtigt:**
+> * *Overblik:* Et flowchart giver et visuelt overblik over hele programmet, fra start til slut.
+> * *Planlægning:* Det hjælper med at planlægge de enkelte trin i programmet og deres rækkefølge.
+> * *Fejlfinding:* Hvis der opstår problemer senere, kan flowcharten bruges til at identificere, hvor fejlen ligger.
+> * *Kommunikation:* Det er en god måde at forklare andre, hvordan programmet fungerer.
+
+### Eksempel på WorkFlow
+
+```mermaid
+
+graph LR
+        A([Start]) --> B[Hello World]
+        B --> C[\Get Number x and y from user\]
+        C --> D{If x < y}
+        D --> |Yes|E([End])
+        D --> |no| B 
+```
+
+**Sådan bygger vi et flowchart til hundredetal-spillet:** <br>
+Alt efter hvilket flow vi ønsker i programmet kan vi 
+*Identificer de vigtigste trin til:* 
+> * Start: Programmet starter.
+> * Generer tal: Et tilfældigt tal mellem 1 og 99 genereres.Vis tal: 
+> * Tallet vises på skærmen.
+> * Indsaml svar: Brugeren indtaster svarene.
+> * Tjek svar: Svarene sammenlignes med de korrekte svar.
+> * Giv feedback: Brugeren får at vide, hvor mange svar der var rigtige.
+> * Nyt spil eller slut: Brugeren kan vælge at spille igen eller afslutte.  
+
+
+### Tips:
+* Start med at lave en simpel version af spillet, og udbyg det gradvist.
+* Test din kode grundigt for at finde og rette fejl. Bruge din kollegaer.
+* Spørg din instuktør eller medstuderende om hjælp, hvis du sidder fast.
+
+# Opgave 1: 
+1. Tegn et flow for programmet ved hjælp af: [___mermaid.live___](https://mermaid.live)
+2. Dokumentation: [___Flowcharts - Basic Syntax___](https://mermaid.js.org/syntax/flowchart.html#data-input-output-lean-right)
+3. Dokumenter dit mermaid diagram i Github's Readme repository, som du har oprettet for projektet.
+4. Du skal have ___godkendt diagrammet___, før end du påbegynder programmeringsdelen!
+
+
+
+# Opgave2: <br> Byg et interaktive hundredetal!
+
+
+
 ### Beskrivelse:
 Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil blive valgt tilfældigt, og brugeren/kunden/barnet skal så finde de tal, der er 10 større, 10 mindre, 1 større og 1 mindre.
 
 
 <div align="center">
-  <img src="images/HundresCart_MoreThan_LessThan.png" style=" width: 500px;  margin: 0 auto;">
+  <img src="images/ScreenShot Interaktive hundretal.jpg" style=" width: 500px;  margin: 0 auto;">
 </div>
 
 ### Krav:
-* **Spilmotor:** C# Winforms, eller efter aftale (specifikke spilmotor eller programmeringssprog, f.eks. Unity, Winforms eller blazor. C# eller javascript)
+* **Spilmotor:** C# Winforms (Efter aftale kan specifikke spilmotor eller programmeringssprog anvendes, som f.eks: Unity, blazor eller javascript)
 * **Funktionalitet:**
   * Tilfældig talgenerering
   * Brugerinput
   * Svarafstemning / feedback på om svar korrekt forkert
   * Grafisk brugerinterface
-* **Ekstra (valgfrit):**
-  * Timer
-  * Highscore
-  * Forskellige sværhedsgrader
-  * Tematisk design
-  * Lydeffekter
+
 
 ### Leverance:
-* **Kode:** Indlever din kode i et git-repository (f.eks. på GitHub).
+* **Kode:** Indlever din kode i et git-repository på GitHub.
 * **Dokumentation:** Lav en kort dokumentation, der forklarer din kode og designvalg.
 * **Præsentation:** Vær klar til at præsentere dit projekt for klassen.
 
@@ -52,46 +109,10 @@ Du skal programmere et spil, hvor du skal udfylde et hundredetal. Et tal vil bli
 ### Tips:
 * Start med at lave en simpel version af spillet, og udbyg det gradvist.
 * Test din kode grundigt for at finde og rette fejl.
-* Spørg din lærer eller medstuderende om hjælp, hvis du sidder fast.
+* Spørg din instuktør eller medstuderende om hjælp, hvis du sidder fast.
 
-### Eksempel på WorkFlow
-```mermaid
-graph LR
-    subgraph Initialisering
-        A(Start) --> B{Initialiser komponenter}
-        B --> C{Initialiser timer-event}
-        C --> D{Initialiser tastatur-events}
-        D --> E{Nulstil spil-timer}
-        E --> F{Ny Spil}
-    end
 
-    subgraph Spil-loop
-         F --> G{Timer1 Spiltid?}
-        classDef tooltip fill:#ffcccc,stroke:#000FF000,stroke-width:2px;
-        class G tooltip
-        G -- Ja --> H{Reduktion af tid}
-        H --> I{Tid udløbet?}
-        I -- Ja --> J{Stop timer}
-        I -- Nej --> G
-        J --> K{Sæt alle tekstbokse til ReadOnly}
-        K --> L{Vis besked: Tid udløbet timer2}
-        L --> M{Spil igen?}
-        M -- Ja --> F
-        M -- Nej --> N{Afslut program}
-        G --> O{Check for svar?}
-        O -- Ja --> P{Tjek svar}
-        P --> Q{Vis feedback}
-        Q --> R{Nulstil spil}
-        R --> F
-    end
 
-   subgraph Brugerinput
-        F --> S{Bruger indtaster svar}
-        S --> T{Valider input karakter}
-        T -- Gyldigt (tal & backspace)--> O
-        T -- Ugyldigt (ikke tal)--> S
-    end
-```
 **Eksempel på kode (C#):**
 ```csharp
 using System;
@@ -134,15 +155,46 @@ namespace Hundredtal
 }
 ```
 
-# Dag 2
-|  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
+# Dag 2: opsamling og forsættelse
+
+> * Her tilføjer vi en hundredetals tabel for de elever som i indskolingen har brug for ekstra hjælp til at finde tallende.
+
+## Opgave 3
+> * Vi forsætte med inplementering og:
+> * Udvidelse af programmets ___flowchart___
+> * ___Flowchart skal godkendes føre du programmer___
+> * Udvidelse af programkode
+  
+### Datagridview
+> * Du skal marker det fundet tal
+> * Du skal marker de tal som eleven skal udfylde
+
+|Row 1|Row 2|Row 3 |Row 4|Row 5|Row 6|Row 7|Row 8|Row 9|Row 10|
 |---|---|---|---|---|---|---|---|---|---|
+|  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
-| 31 | 32 | _33_| 34 | 35 | 36 | 37 | 38 | 39 | 40 |
-| 41 | _42_ | ___43___ | _44_ | 45 | 46 | 47 | 48 | 49 | 50 |
-| 51 | 52 | _53_ | 54 | 55 | 56 | 57 | 58 | 59 | 60 |
+| 31 | 32 | ___33___| 34 | 35 | 36 | 37 | 38 | 39 | 40 |
+| 41 | ___42___ | __43__ | ___44___ | 45 | 46 | 47 | 48 | 49 | 50 |
+| 51 | 52 | ___53___ | 54 | 55 | 56 | 57 | 58 | 59 | 60 |
 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 |
 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 |
 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 | 89 | 90 |
 | 91 | 92 | 93 | 94 | 95 | 96 | 97 | 98 | 99 | 100 |
+
+### Eksemple:
+
+<div align="center">
+  <img src="images/ScreenShot Interaktive hundretal datagridview.jpg" style=" width: 500px;  margin: 0 auto;">
+</div>
+
+# Dag 3
+* **Ekstra (valgfrit):**
+  * Timer
+  * Highscore
+  * Forskellige sværhedsgrader
+  * Tematisk design
+  * Lydeffekter
+
+# Note 
+[markdownlivepreview](https://markdownlivepreview.com/)
